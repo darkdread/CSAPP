@@ -381,3 +381,127 @@ for (first = 0, last = cnt-1;
 ```
 
 ---
+
+## Problem 2.12
+
+Write C expressions, in terms of variable x, for the following values. Your code
+should work for any word size w ≥ 8. For reference, we show the result of evaluating the expressions for x = 0x87654321, with w = 32.
+
+A. The least significant byte of x, with all other bits set to 0. [0x00000021].  
+B. All but the least significant byte of x complemented, with the least significant
+byte left unchanged. [0x789ABC21].  
+C. The least significant byte set to all 1s, and all other bytes of x left unchanged.
+[0x876543FF].
+
+x = 1000 0111 0110 0101 0100 0011 0010 0001  
+0xFF = 0000 0000 0000 0000 0000 0000 1111 1111  
+
+A  
+x & 0xFF = 0000 0000 0000 0000 0000 0000 0010 0001 = 0x00000021
+
+B  
+~x = 0111 1000 1001 1010 1011 1100 1101 1110  
+~x ^ 0xFF = 0111 1000 1001 1010 1011 1100 0010 0001 = 0x789ABC21
+
+C  
+x | 0xFF = 1000 0111 0110 0101 0100 0011 1111 1111 = 0x876543FF
+
+---
+
+## Problem 2.13
+
+https://www.nayuki.io/page/boolean-algebra-laws this link may prove useful...
+
+The Digital Equipment VAX computer was a very popular machine from the late
+1970s until the late 1980s. Rather than instructions for Boolean operations And
+and Or, it had instructions bis (bit set) and bic (bit clear). Both instructions take
+a data word x and a mask word m. They generate a result z consisting of the bits of
+x modified according to the bits of m. With bis, the modification involves setting
+z to 1 at each bit position where m is 1. With bic, the modification involves setting
+z to 0 at each bit position where m is 1.
+
+To see how these operations relate to the C bit-level operations, assume we
+have functions bis and bic implementing the bit set and bit clear operations, and
+that we want to use these to implement functions computing bit-wise operations
+| and ^, without using any other C operations. Fill in the missing code below.  
+**Hint: Write C expressions for the operations bis and bic.**
+
+``` C
+/* Declarations of functions implementing operations bis and bic */
+int bis(int x, int m);
+int bic(int x, int m);
+
+/* Compute x|y using only calls to functions bis and bic */
+int bool_or(int x, int y) {
+    int result = ________;
+    return result;
+}
+
+/* Compute x^y using only calls to functions bis and bic */
+int bool_xor(int x, int y) {
+    int result = ________;
+    return result;
+}
+```
+
+`bis(x, m)`
+* If x = 0001, m = 1111
+* z = x | m = 1111
+* return z
+
+`bic(x, m)`
+* If x = 0001, m = 1111
+* z = x & ~m = 0000
+* return z
+
+`bool_or(x, y)`
+* If x = 0001, y = 1000
+* x|y = 1001
+* result = bis(x, y) = 1001
+
+`bool_xor(x, y)`
+* If x = 0101, y = 1011
+* x^y = 1110
+* bis(x, y) = 1111
+* bic(x, y) = 0100
+* bic(y, x) = 1010
+* result = bis(bic(x, y), bic(y, x)) = 1110
+
+---
+
+## Problem 2.14
+
+Suppose that x and y have byte values 0x66 and 0x39, respectively. Fill in the
+following table indicating the byte values of the different C expressions:
+
+Expression Value Expression Value
+x&y x && y
+x|y x || y
+~x | ~y !x || !y
+x & !y x && ~y
+
+| Expression | Value | Expression | Value |
+| ---        | ---   | ---        | ---   |
+| x & y      | 0x20  | x && y     | 0x01  |
+| x | y      | 0x7F  | x || y     | 0x01  |
+| ~x | ~y    | 0xDF  | !x || !y   | 0x00  |
+| x & !y     | 0x00  | x && ~y    | 0x01  |
+
+x = 0110 0110  
+y = 0011 1001  
+x & y = 0010 0000  
+x && y = 0001  
+x | y = 0111 1111  
+x || y = 0001  
+~x | ~y = 1101 1111  
+!x || !y = 0000  
+x & !y = 0000  
+x && ~y = 0001  
+
+---
+
+## Problem 2.15
+
+
+
+---
