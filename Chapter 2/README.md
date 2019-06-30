@@ -474,21 +474,16 @@ int bool_xor(int x, int y) {
 Suppose that x and y have byte values 0x66 and 0x39, respectively. Fill in the
 following table indicating the byte values of the different C expressions:
 
-Expression Value Expression Value
-x&y x && y
-x|y x || y
-~x | ~y !x || !y
-x & !y x && ~y
-
 | Expression | Value | Expression | Value |
 | ---        | ---   | ---        | ---   |
 | x & y      | 0x20  | x && y     | 0x01  |
-| x | y      | 0x7F  | x || y     | 0x01  |
-| ~x | ~y    | 0xDF  | !x || !y   | 0x00  |
+| x \| y      | 0x7F  | x \|\| y     | 0x01  |
+| ~x \| ~y    | 0xDF  | !x \|\| !y   | 0x00  |
 | x & !y     | 0x00  | x && ~y    | 0x01  |
 
 x = 0110 0110  
 y = 0011 1001  
+
 x & y = 0010 0000  
 x && y = 0001  
 x | y = 0111 1111  
@@ -502,6 +497,96 @@ x && ~y = 0001
 
 ## Problem 2.15
 
+Using only bit-level and logical operations, write a C expression that is equivalent 
+to x == y. In other words, it will return 1 when x and y are equal, and 0 otherwise.
+
+> (x ^ y) && 0x01
+
+---
+
+## Problem 2.16
+
+Fill in the table below showing the effects of the different shift operations on singlebyte quantities. The best way to think about shift operations is to work with binary
+representations. Convert the initial values to binary, perform the shifts, and then
+convert back to hexadecimal. Each of the answers should be 8 binary digits or 2
+hexadecimal digits.
+
+| x      |        | x << 3 |        | x >> 2 | (Logical) | x >> 2 | (Arithmetic) |
+| ---    | ---    | ---    | ---    | ---    | ---       | ---    | ---          |
+| Hex    | Binary | Hex    | Binary | Hex    | Binary    | Hex    | Binary       |
+| 0xC3   | ______ | ______ | ______ | ______ | ______    | ______ | ______       |
+| 0x75   | ______ | ______ | ______ | ______ | ______    | ______ | ______       |
+| 0x87   | ______ | ______ | ______ | ______ | ______    | ______ | ______       |
+| 0x66   | ______ | ______ | ______ | ______ | ______    | ______ | ______       |
+
+x  
+0xC3 = 1100 0011  
+0x75 = 0111 0101  
+0x87 = 1000 0111  
+0x66 = 0110 0110  
+
+x << 3  
+0xC3 << 3 = 0001 1000 = 0x18  
+0x75 << 3 = 1010 1000 = 0xA8  
+0x87 << 3 = 0011 1000 = 0x38  
+0x66 << 3 = 0011 0000 = 0x30  
+
+x >> 2 (Logical)  
+0xC3 >> 2 = 0011 0000 = 0x30  
+0x75 >> 2 = 0001 1101 = 0x1D  
+0x87 >> 2 = 0010 0001 = 0x21  
+0x66 >> 2 = 0001 1001 = 0x19  
+
+x >> 2 (Arithmetic)  
+0xC3 >> 2 = 1111 0000 = 0xF0  
+0x75 >> 2 = 0001 1101 = 0x1D  
+0x87 >> 2 = 1110 0001 = 0xE1  
+0x66 >> 2 = 0001 1001 = 0x19  
+
+---
+
+## Problem 2.17
+
+Assuming w = 4, we can assign a numeric value to each possible hexadecimal
+digit, assuming either an unsigned or a two’s-complement interpretation. Fill in
+the following table according to these interpretations by writing out the nonzero
+powers of two in the summations shown in Equations 2.1 and 2.3:
+
+| $\vec{x}$ |        |                            |                             |
+| ---       | ---    | ---                        | ---                         |
+| Hex       | Binary | B2U$_4(\vec{x})$           | B2T$_4(\vec{x})$            |
+| 0xE       | [1110] | $2^3$ + $2^2$ + $2^1$ = 14 | $-2^3$ + $2^2$ + $2^1$ = -2 |
+| 0x0       | ______ | ______                     | ______                      |
+| 0x5       | ______ | ______                     | ______                      |
+| 0x8       | ______ | ______                     | ______                      |
+| 0xD       | ______ | ______                     | ______                      |
+| 0xF       | ______ | ______                     | ______                      |
+
+0x0 = 0000  
+B2U$_4(\vec{x})$ = 0  
+B2T$_4(\vec{x})$ = 0  
+
+0x5 = 0101  
+B2U$_4(\vec{x})$ = $2^2$ + $2^0$ = 5  
+B2T$_4(\vec{x})$ = $2^2$ + $2^0$ = 5  
+
+0x8 = 1000  
+B2U$_4(\vec{x})$ = $2^3$ = 8  
+B2T$_4(\vec{x})$ = $-2^3$ = -8  
+
+0xD = 1101  
+B2U$_4(\vec{x})$ = $2^3$ + $2^2$ + $2^0$ = 13  
+B2T$_4(\vec{x})$ = $-2^3$ + $2^2$ + $2^0$ = -3  
+
+0xF = 1111  
+B2U$_4(\vec{x})$ = $2^3$ + $2^2$ + $2^1$ + $2^0$ = 15  
+B2T$_4(\vec{x})$ = $-2^3$ + $2^2$ + $2^1$ + $2^0$ = -1  
+
+---
+
+## Problem 2.18
+
 
 
 ---
+
