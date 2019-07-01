@@ -653,10 +653,31 @@ In this context, we only take the signed value if it exists, because in two's co
 
 Problem 2.19
 
+Using the table you filled in when solving Problem 2.17, fill in the following table
+describing the function $T2U_4$:
 
+| $x$      | $T2U_4(x)$         |
+| ---      | ---                |
+| -8       | ___________        |
+| -3       | ___________        |
+| -2       | ___________        |
+| -1       | ___________        |
+|  0       | ___________        |
+|  5       | ___________        |
+
+-8 = 1000  
+-3 = 1101  
+-2 = 1110  
+-1 = 1111  
+0 = 0000  
+5 = 0101  
 
 ---
 
+Problem 2.20
 
+
+
+---
 
 
