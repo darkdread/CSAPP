@@ -665,18 +665,23 @@ describing the function $T2U_4$:
 |  0       | ___________        |
 |  5       | ___________        |
 
--8 = 1000  
--3 = 1101  
--2 = 1110  
--1 = 1111  
-0 = 0000  
-5 = 0101  
+-8 = 1000 = 8  
+-3 = 1101 = 13  
+-2 = 1110 = 14  
+-1 = 1111 = 15  
+0 = 0000 = 0  
+5 = 0101 = 5 
 
 ---
 
 Problem 2.20
 
+Explain how Equation 2.6 applies to the entries in the table you generated when
+solving Problem 2.19.
 
+> For the first four entries, the values of x are negative and $T2U_4(x) = x + 2^4$.
+
+> For the remaining two entries, the values of x are nonnegative and $T2U_4(x) = x$.
 
 ---
 
