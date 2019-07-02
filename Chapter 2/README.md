@@ -685,4 +685,33 @@ solving Problem 2.19.
 
 ---
 
+Problem 2.21
 
+Assuming the expressions are evaluated on a 32-bit machine that uses two’scomplement arithmetic, fill in the following table describing the effect of casting
+and relational operations, in the style of Figure 2.18:
+
+| Expression                    | Type          | Evaluation    |
+| ---                           | ---           | ---           |
+| -2147483647-1 == 2147483648U  | ___________   | ___________   |
+| -2147483647-1  <  2147483647  | ___________   | ___________   |
+| -2147483647-1U <  2147483647  | ___________   | ___________   |
+| -2147483647-1  < -2147483647  | ___________   | ___________   |
+| -2147483647-1U < -2147483647  | ___________   | ___________   |
+
+-2147483647-1  == 2147483648U = Unsigned, 0x01  
+-2147483647-1  <  2147483647 = Signed, 0x01  
+-2147483647-1U <  2147483647 = Unsigned, 0x00  
+-2147483647-1  < -2147483647 = Signed, 0x01  
+-2147483647-1U < -2147483647 = Unsigned, 0x01  
+
+T2U(-2147483647) = T2U(-2^31+1) = -2147483647 + 2^32 = 2147483649  
+T2U(-2147483647-1) = T2U(-2^31) = 2147483648  
+T2U(-2147483647-1U) = T2U(2147483649-1) = 2147483648  
+
+---
+
+Problem 2.22
+
+AHHHHHHHHHHHHHHH
+
+---
