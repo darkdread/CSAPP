@@ -1,5 +1,41 @@
 # Chapter 2: Representing and Manipulating Information
 
+## Important Notes:
+
+Byte = 8 bits  
+
+Big vs Little Endian:
+
+![endians](images/big_little_endian.jpg "endians")
+
+Note that in the word `0x01234567` the `high-order byte has hexadecimal value
+0x01`, while the `low-order byte has value 0x67`.
+
+People get surprisingly emotional about which byte ordering is the proper one.
+In fact, the terms “little endian” and “big endian” come from the book Gulliver’s
+Travels by Jonathan Swift, where two warring factions could not agree as to how a
+soft-boiled egg should be opened—by the little end or by the big. Just like the egg
+issue, there is no technological reason to choose one byte ordering convention over
+the other, and hence the arguments degenerate into bickering about socio-political
+issues. As long as one of the conventions is selected and adhered to consistently,
+the choice is arbitrary.
+
+Logical vs Arithmetic shifts:
+
+![shifts](images/arithmetic_logical_shift.jpg "shifts")
+
+**Arithmetic Right Shift** shifts the bits to the right while replacing the left end by the value of the Most Significant Bit.
+
+The C standards do not precisely define which type of right shift should
+be used. For `unsigned data` (i.e., integral objects declared with the qualifier
+unsigned), `right shifts must be logical`. For signed data (the default), either
+arithmetic or logical shifts may be used. This unfortunately means that any code
+assuming one form or the other will potentially encounter portability problems.
+In practice, however, `almost all compiler/machine combinations use arithmetic
+right shifts for signed data`, and many programmers assume this to be the case.
+
+# Problem Solving
+
 ## Problem 2.1
 
 Perform the following number conversions:
@@ -687,7 +723,7 @@ solving Problem 2.19.
 
 Problem 2.21
 
-Assuming the expressions are evaluated on a 32-bit machine that uses two’scomplement arithmetic, fill in the following table describing the effect of casting
+Assuming the expressions are evaluated on a 32-bit machine that uses two’s complement arithmetic, fill in the following table describing the effect of casting
 and relational operations, in the style of Figure 2.18:
 
 | Expression                    | Type          | Evaluation    |
@@ -712,6 +748,47 @@ T2U(-2147483647-1U) = T2U(2147483649-1) = 2147483648
 
 Problem 2.22
 
-AHHHHHHHHHHHHHHH
+Show that each of the following bit vectors is a two’s-complement representation
+of −5 by applying Equation 2.3:  
+* A. [1011]  
+* B. [11011]  
+* C. [111011]  
+
+A. [1011] = -8 + 2 + 1 = -5  
+B. [11011] = -16 + 8 + 2 + 1 = -5  
+C. [111011] = -32 + 16 + 8 + 2 + 1 = -5  
+
+---
+
+Problem 2.23
+
+```
+int fun1(unsigned word) {
+    return (int) ((word << 24) >> 24);
+}
+int fun2(unsigned word) {
+    return ((int) word << 24) >> 24;
+}
+```
+
+Assume these are executed on a machine with a 32-bit word size that uses two’s complement arithmetic. Assume also that right shifts of signed values are performed arithmetically, while right shifts of unsigned values are performed logically.
+
+A. Fill in the following table showing the effect of these functions for several
+example arguments. You will find it more convenient to work with a hexadecimal representation. Just remember that hex digits 8 through F have their
+most significant bits equal to 1.
+
+| w          | fun1(w)    | fun2(w)    |
+| ---        | ---        | ---        |
+| 0x00000076 | __________ | __________ |
+| 0x87654321 | __________ | __________ |
+| 0x000000C9 | __________ | __________ |
+| 0xEDCBA987 | __________ | __________ |
+
+0x00000076:  
+0x87654321:  
+0x000000C9:  
+0xEDCBA987:  
+
+B. Describe in words the useful computation each of these functions performs.
 
 ---
