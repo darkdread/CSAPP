@@ -4,7 +4,14 @@
 
 Byte = 8 bits  
 
-Big vs Little Endian:
+B2U = Binary to Unsigned  
+B2T = Binary to Twos  
+U2T = Unsigned to Twos  
+T2U = Twos to Unsigned  
+
+---
+
+### Big vs Little Endian:
 
 ![endians](images/big_little_endian.jpg "endians")
 
@@ -20,7 +27,9 @@ the other, and hence the arguments degenerate into bickering about socio-politic
 issues. As long as one of the conventions is selected and adhered to consistently,
 the choice is arbitrary.
 
-Logical vs Arithmetic shifts:
+---
+
+### Logical vs Arithmetic shifts:
 
 ![shifts](images/arithmetic_logical_shift.jpg "shifts")
 
@@ -33,6 +42,22 @@ arithmetic or logical shifts may be used. This unfortunately means that any code
 assuming one form or the other will potentially encounter portability problems.
 In practice, however, `almost all compiler/machine combinations use arithmetic
 right shifts for signed data`, and many programmers assume this to be the case.
+
+---
+
+### Truncating Numbers
+
+When truncating numbers, we remove the high-order bits. For example:
+
+8 bits to 6 bits  
+0xF6 = 0x36  
+(1111 0110) = (0011 0110)
+
+For an unsigned number $x$, the result of truncating it to $k$ bits is equivalent to computing $x \mod 2k$.
+
+For a two’s-complement number $x$, we treat the truncated number as being signed. This will have numeric value $U2T_k(x \mod 2^k)$.
+
+---
 
 # Problem Solving
 
@@ -785,10 +810,78 @@ most significant bits equal to 1.
 | 0xEDCBA987 | __________ | __________ |
 
 0x00000076:  
+fun1:  
+0000 0000 0000 0000 0000 0000 0111 0110 (0x00000076)  
+fun2:  
+0000 0000 0000 0000 0000 0000 0111 0110 (0x00000076)
+
 0x87654321:  
+fun1:  
+1000 0111 0110 0101 0100 0011 0010 0001 (0x87654321)  
+fun2:  
+1000 0111 0110 0101 0100 0011 0010 0001 (0x87654321)
+
 0x000000C9:  
+fun1:  
+0000 0000 0000 0000 0000 0000 1100 1001 (0x000000C9)  
+fun2:  
+1111 1111 1111 1111 1111 1111 1100 1001 (0xFFFFFFC9)
+
 0xEDCBA987:  
+fun1:  
+1110 1101 1100 1011 1010 1001 1000 0111 (0xEDCBA987)  
+fun2:  
+1111 1111 1111 1111 1111 1111 1000 0111 (0xFFFFFF87)
 
 B. Describe in words the useful computation each of these functions performs.
 
+Function fun1 extracts a value from the low-order 8 bits of the argument,
+giving `an integer ranging between 0 and 255`.  
+Function fun2 extracts a value
+from the low-order 8 bits of the argument, but it also performs **sign extension**.
+`The result will be a number between −128 and 127`.
+
+(EXTRACTED FROM BOOK because I'm dumb and couldn't answer)
+
 ---
+
+Problem 2.24
+
+Suppose we truncate a 4-bit value (represented by hex digits 0 through F) to a 3-bit value (represented as hex digits 0 through 7).  
+Fill in the table below showing the effect of this truncation for some cases, in terms of the unsigned and two’s complement interpretations of those bit patterns.
+
+| Hex     |           | Unsigned |            | Two’s complement |            |
+| ---     | ---       | ---      | ---        | ---              | ---        |
+| Original| Truncated | Original | Truncated  | Original         | Truncated  |
+| 0       | 0         | 0        | __________ | 0                | __________ |
+| 2       | 2         | 2        | __________ | 2                | __________ |
+| 9       | 1         | 9        | __________ | −7               | __________ |
+| B       | 3         | 11       | __________ | −5               | __________ |
+| F       | 7         | 15       | __________ | −1               | __________ |
+
+Hex:
+
+* 0 (0000) = 0 (000)
+* 2 (0010) = 2 (010)
+* 9 (1001) = 1 (001)
+* B (1011) = 3 (011)
+* F (1111) = 7 (111)
+
+Unsigned:
+> $x \mod 2k$
+* 0 (0000)  = 0 (000)
+* 2 (0010)  = 2 (010)
+* 9 (1001)  = 1 (001)
+* 11 (1011) = 3 (011)
+* 15 (1110) = 7 (111)
+
+Two's complement:
+> $U2T_k(x \mod 2k)$
+*  0 (0000) = 0  (000)
+*  2 (0010) = 2  (010)
+* -7 (1001) = 1  (001)
+* -5 (1011) = 3  (011)
+* -1 (1111) = -1 (111)
+
+---
+

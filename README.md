@@ -16,3 +16,6 @@ https://sg.cytron.io/p-raspberry-pi-4-model-b-4gb
 
 Rpi 4GB x2
 Official RPi 15W (5V/3A) PSU USB C UK Plug-Black x1
+
+frozencat:
+RTX 2080 TI
